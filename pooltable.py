@@ -25,8 +25,7 @@ class Table:
     def checkin(self): #check in function
         if self.occupied == False: #if user hits a table that is already turned in, it doesnt break to program
             print("")
-            input(
-                "This table is currently unoccupied, please press enter.")
+            input("This table is currently unoccupied, please press enter.")
             return False
         else:
             self.occupied = False # if its an occupied table that is correct because its being turned in

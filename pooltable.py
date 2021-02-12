@@ -15,8 +15,7 @@ class Table:
     def checkout(self):
         if self.occupied == True:
             print("")             #if/else preventing user from selecting a table that is already checked out
-            input(
-                f" Table {self.number} is currently occupied. Press enter to return to main.")
+            input(f" Table {self.number} is currently occupied. Press enter to return to main.")
         else:
             self.occupied = True #make it true
             self.start_time = datetime.now() #start time

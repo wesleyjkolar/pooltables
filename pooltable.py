@@ -54,8 +54,9 @@ class Table:
             input("This table is currently unoccupied, please press enter.")
             return False
         else:
-            with open("log.txt", "w") as file:
-                file.write(f"{self.number},{self.start_time},{self.end_time}")
+            with open("log.txt", "a") as file:
+                file.write(f"Table number:{self.number} \nStart time and Date: {self.start_time} \nEnd time and date: {self.end_time} \nTime Played: {self.time_played}")
+                file.write("\n")
             self.occupied = False # if its an occupied table that is correct because its being turned in
             self.end_time = datetime.now() #end time
             self.time_played = self.end_time - self.start_time #elapsed time

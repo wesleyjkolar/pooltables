@@ -1,37 +1,6 @@
 from datetime import datetime 
 from time import time
-day = datetime.now()
 time = datetime.now()
-# table class what attributes should be assigned to table
-class Table:
-    def __init__(self, number):
-        self.number = number
-        self.occupied = False
-        self.start_time = ""
-        self.end_time = ""
-        self.time_played = ""
-        self.current_time = ""
-# checkout function
-    def checkout(self):
-        if self.occupied == True:
-            print("")             #if/else preventing user from selecting a table that is already checked out
-            input(f" Table {self.number} is currently occupied. Press enter to return to main.")
-        else:
-            self.occupied = True #make it true
-            self.start_time = datetime.now() #start time
-            self.end_time = datetime.now() #end time
-            self.time_played = self.end_time - self.start_time #time elapsed
-
-    def checkin(self): #check in function
-        if self.occupied == False: #if user hits a table that is already turned in, it doesnt break to program
-            print("")
-            input("This table is currently unoccupied, please press enter.")
-            return False
-        else:
-            self.occupied = False # if its an occupied table that is correct because its being turned in
-            self.end_time = datetime.now() #end time
-            self.time_played = self.end_time - self.start_time #elapsed time
-            return True 
 
 class Formatter():
     def __init__(self):
@@ -58,11 +27,43 @@ class Formatter():
         better_time = f"{hour}:{minute} {self.clock}"
         return better_time
 
-formatter = Formatter()   #gives an easily callable variable for time and date formatting
+formatter = Formatter()
+# table class what attributes should be assigned to table
+class Table:
+    def __init__(self, number):
+        self.number = number
+        self.occupied = False
+        self.start_time = ""
+        self.end_time = ""
+        self.time_played = ""
+        self.current_time = ""
+# checkout function
+    def checkout(self):
+        if self.occupied == True:
+            print("")             #if/else preventing user from selecting a table that is already checked out
+            input(f" Table {self.number} is currently occupied. Press enter to return to main.")
+        else:
+            self.occupied = True #make it true
+            self.start_time = datetime.now() #start time
+            self.end_time = datetime.now() #end time
+            self.time_played = self.end_time - self.start_time #time elapsed
 
+    def checkin(self): #check in function
+        if self.occupied == False: #if user hits a table that is already turned in, it doesnt break to program
+            print("")
+            input("This table is currently unoccupied, please press enter.")
+            return False
+        else:
+            with open("log.txt", "w") as file:
+                file.write(f"{self.number},{self.start_time},{self.end_time}")
+            self.occupied = False # if its an occupied table that is correct because its being turned in
+            self.end_time = datetime.now() #end time
+            self.time_played = self.end_time - self.start_time #elapsed time
+            return True
+            
 class TableManager():
-    def __init__(self, day):
-        self.day = day
+    def __init__(self): 
+        self
 
     def show_menu(self): #function to call menu screen
         print("")
@@ -144,15 +145,14 @@ class TableManager():
                     if status == True: 
                         table.start_time = ""
                         self.show_tables()
-                        print(
-                            f"Table {table.number} has been returned at: {formatter.clock_format(table.end_time)}")
+                        print(f"Table {table.number} has been returned at: {formatter.clock_format(table.end_time)}")
             else:
                 print("")
                 print("You did not enter a valid response.")
         elif user_input == "3":
             self.show_tables() #calls table when user selects option 3
 
-manager = TableManager(day) 
+manager = TableManager() 
 tables = [] #nice array for the tables
 for i in range(1, 13):
     table = Table(i)
